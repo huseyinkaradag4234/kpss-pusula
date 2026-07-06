@@ -17,6 +17,7 @@ import {
   mockProgress,
   mockSubjects,
 } from '../mock/data'
+import { examEngineStore } from '../exam-engine/store'
 import { questionEngineStore } from '../question-engine/store'
 import type {
   ContinueStudy,
@@ -50,7 +51,13 @@ function formatRelativeTime(isoDate: string): string {
 
 export function getDashboardStatCards(): DashboardStatView[] {
   const engine = questionEngineStore.getSnapshot()
-  const lastExam = mockExamResults[0]
+  const lastExamResult = examEngineStore.getAllResults().at(-1)
+  const lastExam = lastExamResult
+    ? {
+        score: lastExamResult.successRate,
+        examTitle: lastExamResult.examTitle,
+      }
+    : mockExamResults[0]
   const targetQuestions = 50
   const todaySolved = engine.todaySolved
   const yesterdaySolved = 28

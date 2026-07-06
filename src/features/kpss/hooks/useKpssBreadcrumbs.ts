@@ -40,6 +40,21 @@ export function useKpssBreadcrumbs(): BreadcrumbItem[] {
 
     if (pathname.startsWith('/exams/') && params.id) {
       const exam = getExamById(params.id)
+      if (pathname.endsWith('/result')) {
+        return [
+          panel,
+          { label: 'Denemeler', to: '/exams' },
+          { label: exam?.title ?? 'Deneme', to: `/exams/${params.id}` },
+          { label: 'Sonuç' },
+        ]
+      }
+      if (pathname.endsWith('/session')) {
+        return [
+          panel,
+          { label: 'Denemeler', to: '/exams' },
+          { label: exam?.title ?? 'Sınav' },
+        ]
+      }
       return [
         panel,
         { label: 'Denemeler', to: '/exams' },

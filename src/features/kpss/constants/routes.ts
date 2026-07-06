@@ -7,6 +7,8 @@ export const KPSS_ROUTES = {
   questionBank: '/question-bank',
   exams: '/exams',
   examDetail: (id: string) => `/exams/${id}`,
+  examSession: (id: string) => `/exams/${id}/session`,
+  examResult: (id: string) => `/exams/${id}/result`,
   progress: '/progress',
   favorites: '/favorites',
   statistics: '/statistics',

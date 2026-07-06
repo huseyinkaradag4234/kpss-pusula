@@ -76,30 +76,16 @@ export function countTopicsByStatus(
   return countItemsByStatus(topics)
 }
 
-// Legacy exports for other modules
-export const mockExams = [
-  {
-    id: 'exam-1',
-    title: 'Genel Yetenek Denemesi #12',
-    description: '120 soruluk tam KPSS denemesi',
-    questionCount: 120,
-    durationMinutes: 130,
-    type: 'mock' as const,
-  },
-]
-
-export const mockExamResults = [
-  {
-    id: 'result-1',
-    examId: 'exam-1',
-    examTitle: 'Genel Yetenek Denemesi #12',
-    score: 78.5,
-    correctCount: 94,
-    wrongCount: 18,
-    emptyCount: 8,
-    completedAt: '2026-07-05T14:30:00Z',
-  },
-]
+export {
+  getExamById,
+  getExamDefinitionById,
+  getExamsList,
+  getExamQuestions,
+  getLastExamResult,
+  getWrongQuestions,
+  mockExamResults,
+  mockExams,
+} from './exams'
 
 export const mockAchievements = [
   {
@@ -134,7 +120,3 @@ export const mockProgress = mockTopics.slice(0, 5).map((topic, index) => {
     progress: topic.progress,
   }
 })
-
-export function getExamById(id: string) {
-  return mockExams.find((e) => e.id === id)
-}

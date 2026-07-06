@@ -27,6 +27,12 @@ export const LazyExamsPage = lazy(
 export const LazyExamDetailPage = lazy(
   () => import('../features/kpss/exams/pages/ExamDetailPage'),
 )
+export const LazyExamSessionPage = lazy(
+  () => import('../features/kpss/exams/pages/ExamSessionPage'),
+)
+export const LazyExamResultPage = lazy(
+  () => import('../features/kpss/exams/pages/ExamResultPage'),
+)
 export const LazyProgressPage = lazy(
   () => import('../features/kpss/progress/pages/ProgressPage'),
 )

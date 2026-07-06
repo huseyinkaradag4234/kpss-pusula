@@ -8,6 +8,7 @@
 @import './shell.css';
 @import './dashboard.css';
 @import './question-engine.css';
+@import './exam-engine.css';
 
 /* Supabase configuration notice */
 .supabase-config-notice {
