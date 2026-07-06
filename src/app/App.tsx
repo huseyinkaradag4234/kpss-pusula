@@ -1,4 +1,5 @@
 import { RouterProvider } from 'react-router-dom'
+import SupabaseConfigNotice from '../components/common/SupabaseConfigNotice'
 import { ToastProvider } from '../components/ui'
 import ThemeProvider from '../contexts/ThemeProvider'
 import { AuthProvider } from '../features/auth'
@@ -9,6 +10,7 @@ export default function App() {
     <ThemeProvider>
       <AuthProvider>
         <ToastProvider>
+          <SupabaseConfigNotice />
           <RouterProvider router={router} />
         </ToastProvider>
       </AuthProvider>

@@ -1,17 +1,23 @@
 import type { Session, User } from '@supabase/supabase-js'
 import { assertSupabaseConfigured } from '../../../config/env'
-import { supabase } from '../../../lib/supabase'
+import { getSupabaseClient } from '../../../lib/supabase'
 import type { LoginCredentials, RegisterCredentials } from '../types/auth.types'
 
-function ensureSupabaseConfigured(): void {
+function getClient() {
   assertSupabaseConfigured()
+  const client = getSupabaseClient()
+
+  if (!client) {
+    throw new Error('Supabase client is not configured.')
+  }
+
+  return client
 }
 
 export async function login(
   credentials: LoginCredentials,
 ): Promise<{ user: User | null; session: Session | null }> {
-  ensureSupabaseConfigured()
-  const { data, error } = await supabase.auth.signInWithPassword(credentials)
+  const { data, error } = await getClient().auth.signInWithPassword(credentials)
 
   if (error) {
     throw error
@@ -21,8 +27,7 @@ export async function login(
 }
 
 export async function logout(): Promise<void> {
-  ensureSupabaseConfigured()
-  const { error } = await supabase.auth.signOut()
+  const { error } = await getClient().auth.signOut()
 
   if (error) {
     throw error
@@ -32,8 +37,7 @@ export async function logout(): Promise<void> {
 export async function register(
   credentials: RegisterCredentials,
 ): Promise<{ user: User | null; session: Session | null }> {
-  ensureSupabaseConfigured()
-  const { data, error } = await supabase.auth.signUp(credentials)
+  const { data, error } = await getClient().auth.signUp(credentials)
 
   if (error) {
     throw error
@@ -43,8 +47,7 @@ export async function register(
 }
 
 export async function forgotPassword(email: string): Promise<void> {
-  ensureSupabaseConfigured()
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+  const { error } = await getClient().auth.resetPasswordForEmail(email, {
     redirectTo: `${window.location.origin}/login`,
   })
 
@@ -54,11 +57,10 @@ export async function forgotPassword(email: string): Promise<void> {
 }
 
 export async function getCurrentUser(): Promise<User | null> {
-  ensureSupabaseConfigured()
   const {
     data: { user },
     error,
-  } = await supabase.auth.getUser()
+  } = await getClient().auth.getUser()
 
   if (error) {
     throw error
@@ -68,8 +70,7 @@ export async function getCurrentUser(): Promise<User | null> {
 }
 
 export async function refreshSession(): Promise<Session | null> {
-  ensureSupabaseConfigured()
-  const { data, error } = await supabase.auth.refreshSession()
+  const { data, error } = await getClient().auth.refreshSession()
 
   if (error) {
     throw error

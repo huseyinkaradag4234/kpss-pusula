@@ -1,7 +1,7 @@
 import type { Session, User } from '@supabase/supabase-js'
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { isSupabaseConfigured } from '../../../config/env'
-import { supabase } from '../../../lib/supabase'
+import { getSupabaseClient } from '../../../lib/supabase'
 import type { UserRole } from '../constants/roles'
 import { getUserRole } from '../utils/role.utils'
 import { AuthContext, type AuthContextValue } from './AuthContext'
@@ -25,9 +25,14 @@ export default function AuthProvider({ children }: AuthProviderProps) {
           return
         }
 
+        const client = getSupabaseClient()
+        if (!client) {
+          return
+        }
+
         const {
           data: { session: initialSession },
-        } = await supabase.auth.getSession()
+        } = await client.auth.getSession()
 
         if (!isMounted) {
           return
@@ -50,9 +55,14 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       return
     }
 
+    const client = getSupabaseClient()
+    if (!client) {
+      return
+    }
+
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+    } = client.auth.onAuthStateChange((_event, nextSession) => {
       if (!isMounted) {
         return
       }

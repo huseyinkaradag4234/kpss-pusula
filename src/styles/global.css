@@ -7,3 +7,67 @@
 @import './layout.css';
 @import './shell.css';
 @import './dashboard.css';
+
+/* Supabase configuration notice */
+.supabase-config-notice {
+  position: sticky;
+  top: 0;
+  z-index: 300;
+  padding: var(--space-3) var(--container-padding);
+  background: color-mix(in srgb, var(--color-warning-subtle) 80%, var(--color-background));
+  border-bottom: 1px solid var(--color-border);
+}
+
+.supabase-config-notice__card {
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  border-color: color-mix(in srgb, var(--color-warning) 35%, var(--color-border));
+  background: var(--color-surface);
+}
+
+.supabase-config-notice__header {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  margin-bottom: var(--space-3);
+}
+
+.supabase-config-notice__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: var(--radius-lg);
+  background: var(--color-warning-subtle);
+  color: var(--color-warning);
+}
+
+.supabase-config-notice__title {
+  margin-top: var(--space-2);
+  font-size: var(--font-title-size);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.supabase-config-notice__text,
+.supabase-config-notice__hint {
+  font-size: var(--font-body-size);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.supabase-config-notice__hint {
+  margin-top: var(--space-2);
+  font-size: var(--font-caption-size);
+}
+
+.supabase-config-notice code {
+  font-family: var(--font-family-mono);
+  font-size: 0.875em;
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+  background: var(--color-muted);
+  color: var(--color-text);
+}
