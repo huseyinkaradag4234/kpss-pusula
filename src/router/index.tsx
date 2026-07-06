@@ -2,12 +2,11 @@ import { createBrowserRouter } from 'react-router-dom'
 import AuthLayout from '../layouts/AuthLayout'
 import DashboardLayout from '../layouts/DashboardLayout'
 import MainLayout from '../layouts/MainLayout'
-import DashboardPage from '../pages/DashboardPage/DashboardPage'
 import HomePage from '../pages/HomePage/HomePage'
 import LoginPage from '../pages/LoginPage/LoginPage'
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage'
-import ProfilePage from '../pages/ProfilePage/ProfilePage'
 import RegisterPage from '../pages/RegisterPage/RegisterPage'
+import { dashboardRoutes } from './kpss.routes'
 
 export const router = createBrowserRouter([
   {
@@ -25,16 +24,7 @@ export const router = createBrowserRouter([
   },
   {
     element: <DashboardLayout />,
-    children: [
-      {
-        path: '/dashboard',
-        element: <DashboardPage />,
-      },
-      {
-        path: '/profile',
-        element: <ProfilePage />,
-      },
-    ],
+    children: dashboardRoutes,
   },
   {
     element: <MainLayout />,

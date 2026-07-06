@@ -225,6 +225,36 @@
   gap: var(--space-3);
 }
 
+/* Module Placeholder */
+.module-placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  animation: dashboard-stagger 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.module-placeholder__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.module-placeholder__description {
+  max-width: 36rem;
+}
+
+.module-placeholder__card {
+  max-width: 28rem;
+  text-align: left;
+}
+
+.module-placeholder__info {
+  margin-top: var(--space-3);
+  font-size: var(--font-body-size);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
 .quick-action-card {
   display: flex;
   align-items: flex-start;
@@ -236,6 +266,8 @@
   border-radius: var(--radius-xl);
   cursor: pointer;
   box-shadow: var(--shadow-xs);
+  text-decoration: none;
+  color: inherit;
 }
 
 .quick-action-card:hover {

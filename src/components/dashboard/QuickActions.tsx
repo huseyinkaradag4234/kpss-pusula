@@ -1,8 +1,22 @@
-import type { QuickAction } from '../../constants/dashboard'
+import { BookOpen, ClipboardList, Heart, RotateCcw } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import type { QuickActionItem } from '../../features/kpss/types'
 import { cn } from '../../utils/cn'
 
+const quickActionIcons: Record<string, LucideIcon> = {
+  'solve-test': ClipboardList,
+  topics: BookOpen,
+  mistakes: RotateCcw,
+  favorites: Heart,
+}
+
+export interface QuickActionView extends QuickActionItem {
+  icon?: LucideIcon
+}
+
 interface QuickActionsProps {
-  actions: QuickAction[]
+  actions: QuickActionView[]
   className?: string
 }
 
@@ -14,12 +28,12 @@ export default function QuickActions({ actions, className }: QuickActionsProps) 
       </h2>
       <div className="quick-actions__grid">
         {actions.map((action) => {
-          const Icon = action.icon
+          const Icon = action.icon ?? quickActionIcons[action.id] ?? BookOpen
 
           return (
-            <button
+            <Link
               key={action.id}
-              type="button"
+              to={action.to}
               className="quick-action-card interactive"
             >
               <span className="quick-action-card__icon" aria-hidden="true">
@@ -31,7 +45,7 @@ export default function QuickActions({ actions, className }: QuickActionsProps) 
                   {action.description}
                 </span>
               </span>
-            </button>
+            </Link>
           )
         })}
       </div>

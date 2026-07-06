@@ -1,5 +1,5 @@
 import { Clock } from 'lucide-react'
-import type { RecentStudy } from '../../constants/dashboard'
+import type { RecentStudy } from '../../features/kpss/types'
 import { Badge } from '../ui'
 import { cn } from '../../utils/cn'
 

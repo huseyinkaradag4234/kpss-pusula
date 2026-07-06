@@ -1,5 +1,4 @@
-import { useLocation } from 'react-router-dom'
-import { breadcrumbMap } from '../../constants/breadcrumbs'
+import { useKpssBreadcrumbs } from '../../features/kpss/hooks/useKpssBreadcrumbs'
 import { useIsMobile } from '../../hooks/useMediaQuery'
 import Breadcrumbs from './Breadcrumbs'
 import NotificationBell from './NotificationBell'
@@ -7,9 +6,8 @@ import SearchBar from './SearchBar'
 import UserProfileMenu from './UserProfileMenu'
 
 export default function DashboardHeader() {
-  const location = useLocation()
   const isMobile = useIsMobile()
-  const breadcrumbs = breadcrumbMap[location.pathname] ?? [{ label: 'Panel' }]
+  const breadcrumbs = useKpssBreadcrumbs()
 
   return (
     <header className="dashboard-header">

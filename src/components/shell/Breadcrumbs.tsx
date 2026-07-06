@@ -1,6 +1,6 @@
 import { ChevronRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import type { BreadcrumbItem } from '../../constants/breadcrumbs'
+import type { BreadcrumbItem } from '../../types/breadcrumb'
 import { cn } from '../../utils/cn'
 
 interface BreadcrumbsProps {

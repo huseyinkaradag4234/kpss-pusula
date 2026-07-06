@@ -1,4 +1,3 @@
-import type { LucideIcon } from 'lucide-react'
 import {
   BookOpen,
   ClipboardList,
@@ -7,6 +6,8 @@ import {
   RotateCcw,
   User,
 } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+import { KPSS_ROUTES } from '../features/kpss/constants/routes'
 
 export interface AppNavItem {
   id: string
@@ -16,7 +17,6 @@ export interface AppNavItem {
   icon: LucideIcon
   end?: boolean
   showInBottomNav?: boolean
-  placeholder?: boolean
 }
 
 export const appNavItems: AppNavItem[] = [
@@ -29,37 +29,33 @@ export const appNavItems: AppNavItem[] = [
     showInBottomNav: true,
   },
   {
-    id: 'topics',
+    id: 'subjects',
     label: 'Konular',
-    to: '/dashboard',
+    to: KPSS_ROUTES.subjects,
     icon: BookOpen,
     showInBottomNav: true,
-    placeholder: true,
   },
   {
-    id: 'tests',
+    id: 'exams',
     label: 'Test Çöz',
     shortLabel: 'Test',
-    to: '/dashboard',
+    to: KPSS_ROUTES.exams,
     icon: ClipboardList,
     showInBottomNav: true,
-    placeholder: true,
   },
   {
     id: 'mistakes',
     label: 'Yanlışlarım',
-    to: '/dashboard',
+    to: KPSS_ROUTES.questionBank,
     icon: RotateCcw,
     showInBottomNav: false,
-    placeholder: true,
   },
   {
     id: 'favorites',
     label: 'Favorilerim',
-    to: '/dashboard',
+    to: KPSS_ROUTES.favorites,
     icon: Heart,
     showInBottomNav: false,
-    placeholder: true,
   },
   {
     id: 'profile',

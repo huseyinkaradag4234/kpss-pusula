@@ -18,7 +18,6 @@ import {
 } from '../mock/data'
 import type {
   ContinueStudy,
-  DashboardStats,
   QuickActionItem,
   RecentStudy,
 } from '../types'
@@ -33,6 +32,10 @@ export interface DashboardStatView {
   trend?: string
 }
 
+export interface QuickActionView extends QuickActionItem {
+  icon: LucideIcon
+}
+
 function formatRelativeTime(isoDate: string): string {
   const diff = Date.now() - new Date(isoDate).getTime()
   const hours = Math.floor(diff / (1000 * 60 * 60))
@@ -43,41 +46,24 @@ function formatRelativeTime(isoDate: string): string {
   return `${Math.floor(hours / 24)} gün önce`
 }
 
-export function getDashboardStats(): DashboardStats {
-  const lastExam = mockExamResults[0]
-
-  return {
-    dailyGoal: mockDailyGoal,
-    todaySolved: mockDailyGoal.completedQuestions,
-    yesterdaySolved: 28,
-    streak: 12,
-    longestStreak: 18,
-    lastExamResult: lastExam ?? {
-      id: '',
-      examId: '',
-      examTitle: 'Henüz deneme yok',
-      score: 0,
-      correctCount: 0,
-      wrongCount: 0,
-      emptyCount: 0,
-      completedAt: new Date().toISOString(),
-    },
-    successRate: 84,
-    successRateTrend: 2,
-  }
-}
-
 export function getDashboardStatCards(): DashboardStatView[] {
-  const stats = getDashboardStats()
+  const dailyGoal = mockDailyGoal
+  const lastExam = mockExamResults[0]
   const goalPercent = Math.round(
-    (stats.dailyGoal.completedQuestions / stats.dailyGoal.targetQuestions) * 100,
+    (dailyGoal.completedQuestions / dailyGoal.targetQuestions) * 100,
   )
+  const todaySolved = dailyGoal.completedQuestions
+  const yesterdaySolved = 28
+  const streak = 12
+  const longestStreak = 18
+  const successRate = 84
+  const successRateTrend = 2
 
   return [
     {
       id: 'daily-goal',
       title: 'Günlük Hedef',
-      value: `${stats.dailyGoal.completedQuestions} / ${stats.dailyGoal.targetQuestions}`,
+      value: `${dailyGoal.completedQuestions} / ${dailyGoal.targetQuestions}`,
       subtitle: 'soru tamamlandı',
       icon: Target,
       accent: 'primary',
@@ -86,25 +72,25 @@ export function getDashboardStatCards(): DashboardStatView[] {
     {
       id: 'today-solved',
       title: 'Bugün Çözülen Soru',
-      value: String(stats.todaySolved),
-      subtitle: `dün: ${stats.yesterdaySolved} soru`,
+      value: String(todaySolved),
+      subtitle: `dün: ${yesterdaySolved} soru`,
       icon: Zap,
       accent: 'secondary',
-      trend: `+${stats.todaySolved - stats.yesterdaySolved}`,
+      trend: `+${todaySolved - yesterdaySolved}`,
     },
     {
       id: 'streak',
       title: 'Çalışma Serisi',
-      value: `${stats.streak} gün`,
-      subtitle: `en uzun seri: ${stats.longestStreak}`,
+      value: `${streak} gün`,
+      subtitle: `en uzun seri: ${longestStreak}`,
       icon: Trophy,
       accent: 'warning',
     },
     {
       id: 'last-exam',
       title: 'Son Deneme',
-      value: String(stats.lastExamResult.score),
-      subtitle: stats.lastExamResult.examTitle,
+      value: String(lastExam?.score ?? 0),
+      subtitle: lastExam?.examTitle ?? 'Henüz deneme yok',
       icon: ClipboardList,
       accent: 'success',
       trend: '+3.2',
@@ -112,40 +98,44 @@ export function getDashboardStatCards(): DashboardStatView[] {
     {
       id: 'success-rate',
       title: 'Başarı Oranı',
-      value: `%${stats.successRate}`,
+      value: `%${successRate}`,
       subtitle: 'son 7 gün ortalaması',
       icon: TrendingUp,
       accent: 'primary',
-      trend: `+${stats.successRateTrend}%`,
+      trend: `+${successRateTrend}%`,
     },
   ]
 }
 
-export function getQuickActions(): QuickActionItem[] {
+export function getQuickActions(): QuickActionView[] {
   return [
     {
       id: 'solve-test',
       label: 'Test Çöz',
       description: 'Yeni teste başla',
       to: KPSS_ROUTES.exams,
+      icon: ClipboardList,
     },
     {
       id: 'topics',
       label: 'Konular',
       description: 'Konu listesine git',
       to: KPSS_ROUTES.subjects,
+      icon: BookOpen,
     },
     {
       id: 'mistakes',
       label: 'Yanlışlarım',
       description: 'Tekrar çöz',
       to: KPSS_ROUTES.questionBank,
+      icon: RotateCcw,
     },
     {
       id: 'favorites',
       label: 'Favorilerim',
       description: 'Kayıtlı sorular',
       to: KPSS_ROUTES.favorites,
+      icon: Heart,
     },
   ]
 }
@@ -162,14 +152,13 @@ export function getRecentStudies(): RecentStudy[] {
 
 export function getContinueStudy(): ContinueStudy {
   const topic = getTopicById('topic-tarih-1')
-  const subject = topic ? 'Tarih' : 'Genel'
 
   return {
     topicId: topic?.id ?? '',
-    title: `${subject} — ${topic?.name ?? 'Çalışmaya devam'}`,
-    subject,
-    lesson: topic?.description ?? 'Kaldığınız yerden devam edin',
-    progress: topic?.progress ?? 0,
-    remaining: `${(topic?.questionCount ?? 0) - (topic?.completedCount ?? 0)} soru kaldı`,
+    title: `Tarih — ${topic?.name ?? 'İnkılap Tarihi'}`,
+    subject: 'Tarih',
+    lesson: topic?.description ?? 'Atatürk İlkeleri',
+    progress: topic?.progress ?? 58,
+    remaining: `${(topic?.questionCount ?? 50) - (topic?.completedCount ?? 29)} soru kaldı`,
   }
 }

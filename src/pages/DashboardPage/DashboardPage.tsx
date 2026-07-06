@@ -3,13 +3,18 @@ import QuickActions from '../../components/dashboard/QuickActions'
 import RecentStudies from '../../components/dashboard/RecentStudies'
 import StatCard from '../../components/dashboard/StatCard'
 import {
-  continueStudy,
-  dashboardStats,
-  quickActions,
-  recentStudies,
-} from '../../constants/dashboard'
+  getContinueStudy,
+  getDashboardStatCards,
+  getQuickActions,
+  getRecentStudies,
+} from '../../features/kpss/services/dashboard.service'
 
 export default function DashboardPage() {
+  const stats = getDashboardStatCards()
+  const quickActions = getQuickActions()
+  const recentStudies = getRecentStudies()
+  const continueStudy = getContinueStudy()
+
   return (
     <div className="dashboard-page">
       <header className="dashboard-page__header">
@@ -25,7 +30,7 @@ export default function DashboardPage() {
 
       <section className="dashboard-stats" aria-label="İstatistikler">
         <div className="dashboard-stats__grid">
-          {dashboardStats.map((stat, index) => (
+          {stats.map((stat, index) => (
             <StatCard
               key={stat.id}
               {...stat}
