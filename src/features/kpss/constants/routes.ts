@@ -1,4 +1,5 @@
 export const KPSS_ROUTES = {
+  dashboard: '/',
   subjects: '/subjects',
   subjectDetail: (id: string) => `/subjects/${id}`,
   topicDetail: (id: string) => `/topics/${id}`,
@@ -13,6 +14,7 @@ export const KPSS_ROUTES = {
 } as const
 
 export const KPSS_ROUTE_LABELS: Record<string, string> = {
+  '/': 'Panel',
   '/subjects': 'Dersler',
   '/question-bank': 'Soru Bankası',
   '/exams': 'Denemeler',

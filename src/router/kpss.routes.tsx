@@ -1,4 +1,4 @@
-import type { RouteObject } from 'react-router-dom'
+import { Navigate, type RouteObject } from 'react-router-dom'
 import {
   LazyAchievementsPage,
   LazyDailyGoalsPage,
@@ -16,7 +16,8 @@ import {
 } from './lazy-pages'
 
 export const dashboardRoutes: RouteObject[] = [
-  { path: '/dashboard', element: <LazyDashboardPage /> },
+  { path: '/', element: <LazyDashboardPage /> },
+  { path: '/dashboard', element: <Navigate to="/" replace /> },
   { path: '/profile', element: <LazyProfilePage /> },
   { path: '/subjects', element: <LazySubjectsPage /> },
   { path: '/subjects/:id', element: <LazySubjectDetailPage /> },

@@ -23,7 +23,7 @@ export const appNavItems: AppNavItem[] = [
   {
     id: 'dashboard',
     label: 'Panel',
-    to: '/dashboard',
+    to: KPSS_ROUTES.dashboard,
     icon: LayoutDashboard,
     end: true,
     showInBottomNav: true,

@@ -10,9 +10,9 @@ export function useKpssBreadcrumbs(): BreadcrumbItem[] {
   const { pathname } = location
 
   return useMemo(() => {
-    const panel: BreadcrumbItem = { label: 'Panel', to: '/dashboard' }
+    const panel: BreadcrumbItem = { label: 'Panel', to: '/' }
 
-    if (pathname === '/dashboard') {
+    if (pathname === '/') {
       return [{ label: 'Panel' }]
     }
 

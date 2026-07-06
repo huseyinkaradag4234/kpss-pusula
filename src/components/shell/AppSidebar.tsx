@@ -8,7 +8,7 @@ export default function AppSidebar() {
   return (
     <aside className="app-sidebar" aria-label="Ana navigasyon">
       <div className="app-sidebar__header">
-        <NavLink to="/dashboard" className="app-sidebar__brand interactive" end>
+        <NavLink to="/" className="app-sidebar__brand interactive" end>
           <span className="app-sidebar__brand-icon" aria-hidden="true">
             <Compass size={20} />
           </span>
