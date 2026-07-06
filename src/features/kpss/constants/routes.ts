@@ -3,6 +3,7 @@ export const KPSS_ROUTES = {
   subjects: '/subjects',
   subjectDetail: (id: string) => `/subjects/${id}`,
   topicDetail: (id: string) => `/topics/${id}`,
+  study: (subTopicId: string) => `/study/${subTopicId}`,
   questionBank: '/question-bank',
   exams: '/exams',
   examDetail: (id: string) => `/exams/${id}`,

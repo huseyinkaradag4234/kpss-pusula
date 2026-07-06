@@ -15,6 +15,9 @@ export const LazySubjectDetailPage = lazy(
 export const LazyTopicDetailPage = lazy(
   () => import('../features/kpss/topics/pages/TopicDetailPage'),
 )
+export const LazyStudyPage = lazy(
+  () => import('../features/kpss/study/pages/StudyPage'),
+)
 export const LazyQuestionBankPage = lazy(
   () => import('../features/kpss/question-bank/pages/QuestionBankPage'),
 )

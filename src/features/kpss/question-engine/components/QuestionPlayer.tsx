@@ -7,7 +7,7 @@ import {
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Badge, Button, Card, CardBody, useToast } from '../../../../components/ui'
-import { getTopicById, getQuestionsByTopicId } from '../../mock/data'
+import { getSubTopicById, getTopicById, getQuestionsBySubTopicId, getQuestionsByTopicId } from '../../mock/data'
 import { useQuestionEngine } from '../../question-engine/useQuestionEngine'
 import type { Question } from '../../types'
 import { QUESTION_OPTION_LABELS } from '../../types'
@@ -19,18 +19,26 @@ import QuestionResultScreen from './QuestionResultScreen'
 
 interface QuestionPlayerProps {
   topicId: string
+  subTopicId?: string
 }
 
 type AnswerState = 'idle' | 'correct' | 'wrong'
 
-export default function QuestionPlayer({ topicId }: QuestionPlayerProps) {
+export default function QuestionPlayer({ topicId, subTopicId }: QuestionPlayerProps) {
   const navigate = useNavigate()
   const { showToast } = useToast()
   const { recordAnswer, toggleFavorite, setSessionResult, favoriteQuestionIds } =
     useQuestionEngine()
 
   const topic = getTopicById(topicId)
-  const questions = useMemo(() => getQuestionsByTopicId(topicId), [topicId])
+  const subTopic = subTopicId ? getSubTopicById(subTopicId) : undefined
+  const questions = useMemo(
+    () =>
+      subTopicId
+        ? getQuestionsBySubTopicId(subTopicId)
+        : getQuestionsByTopicId(topicId),
+    [topicId, subTopicId],
+  )
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
@@ -152,6 +160,10 @@ export default function QuestionPlayer({ topicId }: QuestionPlayerProps) {
     )
   }
 
+  if (!currentQuestion) {
+    return null
+  }
+
   return (
     <div className="question-player">
       <header className="question-player__header">
@@ -159,7 +171,12 @@ export default function QuestionPlayer({ topicId }: QuestionPlayerProps) {
           <Badge variant={getDifficultyVariant(topic.difficulty)}>
             {getDifficultyLabel(topic.difficulty)}
           </Badge>
-          <h1 className="question-player__topic">{topic.name}</h1>
+          <h1 className="question-player__topic">
+            {subTopic ? subTopic.name : topic.name}
+          </h1>
+          {subTopic ? (
+            <p className="text-caption question-player__subtitle">{topic.name}</p>
+          ) : null}
         </div>
         <div className="question-player__meta">
           <span className="question-player__counter" aria-live="polite">

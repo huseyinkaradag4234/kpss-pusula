@@ -1,5 +1,7 @@
 export type Difficulty = 'easy' | 'medium' | 'hard'
 
+export type StudyStatus = 'completed' | 'started' | 'not_started'
+
 export type QuestionOptionLabel = 'A' | 'B' | 'C' | 'D'
 
 export interface Subject {
@@ -14,6 +16,9 @@ export interface Subject {
   progress: number
   color: string
   lastStudiedAt: string
+  estimatedStudyMinutes: number
+  startedTopicCount: number
+  notStartedTopicCount: number
 }
 
 export interface Topic {
@@ -28,12 +33,30 @@ export interface Topic {
   correctRate: number
   completedCount: number
   progress: number
+  subTopicCount: number
+  status: StudyStatus
+  estimatedStudyMinutes: number
+}
+
+export interface SubTopic {
+  id: string
+  topicId: string
+  subjectId: string
+  name: string
+  slug: string
+  description: string
+  questionCount: number
+  solvedCount: number
+  progress: number
+  status: StudyStatus
+  estimatedStudyMinutes: number
 }
 
 export interface Question {
   id: string
   topicId: string
   subjectId: string
+  subTopicId: string
   title: string
   text: string
   options: [string, string, string, string]
@@ -129,6 +152,7 @@ export interface DashboardStats {
 
 export interface ContinueStudy {
   topicId: string
+  subTopicId: string
   title: string
   subject: string
   lesson: string

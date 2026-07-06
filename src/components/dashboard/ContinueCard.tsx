@@ -4,7 +4,7 @@ import { KPSS_ROUTES } from '../../features/kpss/constants/routes'
 import { Button } from '../ui'
 
 interface ContinueCardProps {
-  topicId: string
+  subTopicId: string
   title: string
   subject: string
   lesson: string
@@ -13,7 +13,7 @@ interface ContinueCardProps {
 }
 
 export default function ContinueCard({
-  topicId,
+  subTopicId,
   title,
   subject,
   lesson,
@@ -50,7 +50,7 @@ export default function ContinueCard({
           </div>
         </div>
 
-        <Link to={KPSS_ROUTES.topicDetail(topicId)}>
+        <Link to={KPSS_ROUTES.study(subTopicId)}>
           <Button
             variant="primary"
             size="lg"

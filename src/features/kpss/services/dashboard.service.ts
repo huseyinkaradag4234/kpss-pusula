@@ -11,6 +11,7 @@ import {
 import type { LucideIcon } from 'lucide-react'
 import { KPSS_ROUTES } from '../constants/routes'
 import {
+  getSubTopicsByTopicId,
   getTopicById,
   mockExamResults,
   mockProgress,
@@ -150,12 +151,16 @@ export function getRecentStudies(): RecentStudy[] {
 export function getContinueStudy(): ContinueStudy {
   const topic = getTopicById('topic-tarih-inkilap-tarihi')
   const subject = mockSubjects.find((s) => s.id === 'tarih')
+  const subTopics = topic ? getSubTopicsByTopicId(topic.id) : []
+  const subTopic =
+    subTopics.find((st) => st.status === 'started') ?? subTopics[0]
 
   return {
     topicId: topic?.id ?? 'topic-tarih-inkilap-tarihi',
+    subTopicId: subTopic?.id ?? 'subtopic-tarih-inkilap-tarihi-temel-kavramlar',
     title: `${subject?.name ?? 'Tarih'} — ${topic?.name ?? 'İnkılap Tarihi'}`,
     subject: subject?.name ?? 'Tarih',
-    lesson: topic?.description ?? 'Atatürk İlkeleri',
+    lesson: subTopic?.name ?? topic?.description ?? 'İnkılap Tarihi',
     progress: topic?.progress ?? 58,
     remaining: `${(topic?.questionCount ?? 20) - (topic?.solvedCount ?? 12)} soru kaldı`,
   }

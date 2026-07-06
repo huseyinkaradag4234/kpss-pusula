@@ -13,6 +13,8 @@ export type {
   QuestionSessionResult,
   QuickActionItem,
   RecentStudy,
+  StudyStatus,
+  SubTopic,
   Subject,
   Topic,
 } from './types'
@@ -31,12 +33,19 @@ export {
   getRecentStudies,
 } from './services/dashboard.service'
 export {
+  countItemsByStatus,
+  countTopicsByStatus,
+  getContinueSubTopicForSubject,
   getExamById,
+  getQuestionsBySubTopicId,
   getQuestionsByTopicId,
+  getSubTopicById,
+  getSubTopicsByTopicId,
   getSubjectById,
   getTopicsBySubjectId,
   getTopicById,
   mockSubjects,
+  mockSubTopics,
   mockTopics,
   mockExams,
   mockQuestions,

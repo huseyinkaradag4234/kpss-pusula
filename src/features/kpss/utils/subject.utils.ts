@@ -47,3 +47,27 @@ export function getDifficultyVariant(
   if (difficulty === 'hard') return 'danger'
   return 'warning'
 }
+
+export function formatStudyDuration(minutes: number): string {
+  if (minutes < 60) return `${minutes} dk`
+  const hours = Math.floor(minutes / 60)
+  const remaining = minutes % 60
+  return remaining > 0 ? `${hours} sa ${remaining} dk` : `${hours} sa`
+}
+
+export function getStudyStatusLabel(status: string): string {
+  const labels: Record<string, string> = {
+    completed: 'Tamamlanan',
+    started: 'Başlanan',
+    not_started: 'Başlanmayan',
+  }
+  return labels[status] ?? status
+}
+
+export function getStudyStatusVariant(
+  status: string,
+): 'success' | 'warning' | 'secondary' {
+  if (status === 'completed') return 'success'
+  if (status === 'started') return 'warning'
+  return 'secondary'
+}

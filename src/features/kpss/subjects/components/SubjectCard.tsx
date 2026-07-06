@@ -1,13 +1,15 @@
-import { ArrowRight } from 'lucide-react'
+import type { CSSProperties } from 'react'
+import { ArrowRight, Clock } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Badge, Button } from '../../../../components/ui'
 import { KPSS_ROUTES } from '../../constants/routes'
+import { getContinueSubTopicForSubject } from '../../mock/data'
 import type { Subject } from '../../types'
 import {
   formatStudyDate,
+  formatStudyDuration,
   getSubjectIcon,
 } from '../../utils/subject.utils'
-import { getTopicsBySubjectId } from '../../mock/data'
 
 interface SubjectCardProps {
   subject: Subject
@@ -15,10 +17,15 @@ interface SubjectCardProps {
 
 export default function SubjectCard({ subject }: SubjectCardProps) {
   const Icon = getSubjectIcon(subject.icon)
-  const firstTopic = getTopicsBySubjectId(subject.id)[0]
+  const continueSubTopic = getContinueSubTopicForSubject(subject.id)
 
   return (
-    <article className="subject-card interactive">
+    <article
+      className="subject-card interactive"
+      style={{ '--subject-accent': subject.color } as CSSProperties}
+    >
+      <div className="subject-card__accent" aria-hidden="true" />
+
       <div className="subject-card__header">
         <span
           className="subject-card__icon"
@@ -47,10 +54,29 @@ export default function SubjectCard({ subject }: SubjectCardProps) {
             <dt>Son çalışma</dt>
             <dd>{formatStudyDate(subject.lastStudiedAt)}</dd>
           </div>
+          <div>
+            <dt>Tahmini süre</dt>
+            <dd>{formatStudyDuration(subject.estimatedStudyMinutes)}</dd>
+          </div>
         </dl>
 
-        <div className="subject-card__progress" role="progressbar" aria-valuenow={subject.progress} aria-valuemin={0} aria-valuemax={100}>
-          <span className="subject-card__progress-fill" style={{ width: `${subject.progress}%`, background: subject.color }} />
+        <div className="subject-card__status-row">
+          <Badge variant="success">{subject.completedTopicCount} tamam</Badge>
+          <Badge variant="warning">{subject.startedTopicCount} devam</Badge>
+          <Badge variant="secondary">{subject.notStartedTopicCount} yeni</Badge>
+        </div>
+
+        <div
+          className="subject-card__progress"
+          role="progressbar"
+          aria-valuenow={subject.progress}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
+          <span
+            className="subject-card__progress-fill"
+            style={{ width: `${subject.progress}%`, background: subject.color }}
+          />
         </div>
       </div>
 
@@ -60,8 +86,8 @@ export default function SubjectCard({ subject }: SubjectCardProps) {
             Dersi Gör
           </Button>
         </Link>
-        {firstTopic ? (
-          <Link to={KPSS_ROUTES.topicDetail(firstTopic.id)}>
+        {continueSubTopic ? (
+          <Link to={KPSS_ROUTES.study(continueSubTopic.id)}>
             <Button
               variant="primary"
               size="sm"
@@ -72,6 +98,11 @@ export default function SubjectCard({ subject }: SubjectCardProps) {
           </Link>
         ) : null}
       </div>
+
+      <p className="subject-card__duration">
+        <Clock size={14} aria-hidden="true" />
+        Toplam {formatStudyDuration(subject.estimatedStudyMinutes)}
+      </p>
     </article>
   )
 }
