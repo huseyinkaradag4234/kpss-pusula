@@ -2,6 +2,7 @@ import ContinueCard from '../../components/dashboard/ContinueCard'
 import QuickActions from '../../components/dashboard/QuickActions'
 import RecentStudies from '../../components/dashboard/RecentStudies'
 import StatCard from '../../components/dashboard/StatCard'
+import { useQuestionEngine } from '../../features/kpss/question-engine/useQuestionEngine'
 import {
   getContinueStudy,
   getDashboardStatCards,
@@ -10,6 +11,7 @@ import {
 } from '../../features/kpss/services/dashboard.service'
 
 export default function DashboardPage() {
+  useQuestionEngine()
   const stats = getDashboardStatCards()
   const quickActions = getQuickActions()
   const recentStudies = getRecentStudies()

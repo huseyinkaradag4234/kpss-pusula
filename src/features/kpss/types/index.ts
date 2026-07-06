@@ -1,12 +1,19 @@
+export type Difficulty = 'easy' | 'medium' | 'hard'
+
+export type QuestionOptionLabel = 'A' | 'B' | 'C' | 'D'
+
 export interface Subject {
   id: string
   name: string
   slug: string
   description: string
+  icon: string
   topicCount: number
+  completedTopicCount: number
   questionCount: number
   progress: number
   color: string
+  lastStudiedAt: string
 }
 
 export interface Topic {
@@ -15,7 +22,10 @@ export interface Topic {
   name: string
   slug: string
   description: string
+  difficulty: Difficulty
   questionCount: number
+  solvedCount: number
+  correctRate: number
   completedCount: number
   progress: number
 }
@@ -24,11 +34,28 @@ export interface Question {
   id: string
   topicId: string
   subjectId: string
+  title: string
   text: string
-  options: string[]
+  options: [string, string, string, string]
   correctIndex: number
-  difficulty: 'easy' | 'medium' | 'hard'
-  explanation?: string
+  difficulty: Difficulty
+  explanation: string
+}
+
+export interface QuestionAnswer {
+  questionId: string
+  selectedIndex: number | null
+  isCorrect: boolean
+  answeredAt: string
+}
+
+export interface QuestionSessionResult {
+  topicId: string
+  correctCount: number
+  wrongCount: number
+  successRate: number
+  totalDurationSeconds: number
+  completedAt: string
 }
 
 export interface Exam {
@@ -123,3 +150,5 @@ export interface QuickActionItem {
   description: string
   to: string
 }
+
+export const QUESTION_OPTION_LABELS: QuestionOptionLabel[] = ['A', 'B', 'C', 'D']

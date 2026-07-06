@@ -1,7 +1,10 @@
 import { ArrowRight, Play } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { KPSS_ROUTES } from '../../features/kpss/constants/routes'
 import { Button } from '../ui'
 
 interface ContinueCardProps {
+  topicId: string
   title: string
   subject: string
   lesson: string
@@ -10,6 +13,7 @@ interface ContinueCardProps {
 }
 
 export default function ContinueCard({
+  topicId,
   title,
   subject,
   lesson,
@@ -46,14 +50,16 @@ export default function ContinueCard({
           </div>
         </div>
 
-        <Button
-          variant="primary"
-          size="lg"
-          rightIcon={<ArrowRight size={18} aria-hidden="true" />}
-          leftIcon={<Play size={18} aria-hidden="true" />}
-        >
-          Devam Et
-        </Button>
+        <Link to={KPSS_ROUTES.topicDetail(topicId)}>
+          <Button
+            variant="primary"
+            size="lg"
+            rightIcon={<ArrowRight size={18} aria-hidden="true" />}
+            leftIcon={<Play size={18} aria-hidden="true" />}
+          >
+            Devam Et
+          </Button>
+        </Link>
       </div>
     </section>
   )

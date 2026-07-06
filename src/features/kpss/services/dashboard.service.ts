@@ -12,10 +12,11 @@ import type { LucideIcon } from 'lucide-react'
 import { KPSS_ROUTES } from '../constants/routes'
 import {
   getTopicById,
-  mockDailyGoal,
   mockExamResults,
   mockProgress,
+  mockSubjects,
 } from '../mock/data'
+import { questionEngineStore } from '../question-engine/store'
 import type {
   ContinueStudy,
   QuickActionItem,
@@ -47,27 +48,23 @@ function formatRelativeTime(isoDate: string): string {
 }
 
 export function getDashboardStatCards(): DashboardStatView[] {
-  const dailyGoal = mockDailyGoal
+  const engine = questionEngineStore.getSnapshot()
   const lastExam = mockExamResults[0]
-  const goalPercent = Math.round(
-    (dailyGoal.completedQuestions / dailyGoal.targetQuestions) * 100,
-  )
-  const todaySolved = dailyGoal.completedQuestions
+  const targetQuestions = 50
+  const todaySolved = engine.todaySolved
   const yesterdaySolved = 28
-  const streak = 12
-  const longestStreak = 18
-  const successRate = 84
-  const successRateTrend = 2
+  const successRate = questionEngineStore.getSuccessRate() || 84
+  const goalPercent = Math.round((todaySolved / targetQuestions) * 100)
 
   return [
     {
       id: 'daily-goal',
       title: 'Günlük Hedef',
-      value: `${dailyGoal.completedQuestions} / ${dailyGoal.targetQuestions}`,
+      value: `${todaySolved} / ${targetQuestions}`,
       subtitle: 'soru tamamlandı',
       icon: Target,
       accent: 'primary',
-      trend: `%${goalPercent}`,
+      trend: `%${Math.min(goalPercent, 100)}`,
     },
     {
       id: 'today-solved',
@@ -76,13 +73,13 @@ export function getDashboardStatCards(): DashboardStatView[] {
       subtitle: `dün: ${yesterdaySolved} soru`,
       icon: Zap,
       accent: 'secondary',
-      trend: `+${todaySolved - yesterdaySolved}`,
+      trend: todaySolved > 0 ? `+${todaySolved}` : '0',
     },
     {
       id: 'streak',
       title: 'Çalışma Serisi',
-      value: `${streak} gün`,
-      subtitle: `en uzun seri: ${longestStreak}`,
+      value: '12 gün',
+      subtitle: 'en uzun seri: 18',
       icon: Trophy,
       accent: 'warning',
     },
@@ -99,10 +96,10 @@ export function getDashboardStatCards(): DashboardStatView[] {
       id: 'success-rate',
       title: 'Başarı Oranı',
       value: `%${successRate}`,
-      subtitle: 'son 7 gün ortalaması',
+      subtitle: 'bugünkü oturum ortalaması',
       icon: TrendingUp,
       accent: 'primary',
-      trend: `+${successRateTrend}%`,
+      trend: engine.todaySolved > 0 ? 'canlı' : '+0%',
     },
   ]
 }
@@ -151,14 +148,15 @@ export function getRecentStudies(): RecentStudy[] {
 }
 
 export function getContinueStudy(): ContinueStudy {
-  const topic = getTopicById('topic-tarih-1')
+  const topic = getTopicById('topic-tarih-inkilap-tarihi')
+  const subject = mockSubjects.find((s) => s.id === 'tarih')
 
   return {
-    topicId: topic?.id ?? '',
-    title: `Tarih — ${topic?.name ?? 'İnkılap Tarihi'}`,
-    subject: 'Tarih',
+    topicId: topic?.id ?? 'topic-tarih-inkilap-tarihi',
+    title: `${subject?.name ?? 'Tarih'} — ${topic?.name ?? 'İnkılap Tarihi'}`,
+    subject: subject?.name ?? 'Tarih',
     lesson: topic?.description ?? 'Atatürk İlkeleri',
     progress: topic?.progress ?? 58,
-    remaining: `${(topic?.questionCount ?? 50) - (topic?.completedCount ?? 29)} soru kaldı`,
+    remaining: `${(topic?.questionCount ?? 20) - (topic?.solvedCount ?? 12)} soru kaldı`,
   }
 }
