@@ -1,0 +1,88 @@
+:root {
+  --font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: ui-monospace, 'Cascadia Code', 'Segoe UI Mono', monospace;
+
+  /* Display */
+  --font-display-size: 2.25rem;
+  --font-display-weight: 700;
+  --font-display-line-height: 1.15;
+  --font-display-letter-spacing: -0.03em;
+
+  /* Heading */
+  --font-heading-size: 1.75rem;
+  --font-heading-weight: 600;
+  --font-heading-line-height: 1.25;
+  --font-heading-letter-spacing: -0.02em;
+
+  /* Title */
+  --font-title-size: 1.125rem;
+  --font-title-weight: 600;
+  --font-title-line-height: 1.4;
+  --font-title-letter-spacing: -0.01em;
+
+  /* Body */
+  --font-body-size: 0.9375rem;
+  --font-body-weight: 400;
+  --font-body-line-height: 1.6;
+  --font-body-letter-spacing: 0;
+
+  /* Caption */
+  --font-caption-size: 0.8125rem;
+  --font-caption-weight: 400;
+  --font-caption-line-height: 1.5;
+  --font-caption-letter-spacing: 0.01em;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --font-display-size: 3rem;
+    --font-heading-size: 2rem;
+    --font-title-size: 1.25rem;
+    --font-body-size: 1rem;
+  }
+}
+
+.text-display {
+  font-family: var(--font-family);
+  font-size: var(--font-display-size);
+  font-weight: var(--font-display-weight);
+  line-height: var(--font-display-line-height);
+  letter-spacing: var(--font-display-letter-spacing);
+  color: var(--color-text);
+}
+
+.text-heading {
+  font-family: var(--font-family);
+  font-size: var(--font-heading-size);
+  font-weight: var(--font-heading-weight);
+  line-height: var(--font-heading-line-height);
+  letter-spacing: var(--font-heading-letter-spacing);
+  color: var(--color-text);
+}
+
+.text-title {
+  font-family: var(--font-family);
+  font-size: var(--font-title-size);
+  font-weight: var(--font-title-weight);
+  line-height: var(--font-title-line-height);
+  letter-spacing: var(--font-title-letter-spacing);
+  color: var(--color-text);
+}
+
+.text-body {
+  font-family: var(--font-family);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-body-weight);
+  line-height: var(--font-body-line-height);
+  letter-spacing: var(--font-body-letter-spacing);
+  color: var(--color-text);
+}
+
+.text-caption {
+  font-family: var(--font-family);
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+  letter-spacing: var(--font-caption-letter-spacing);
+  color: var(--color-text-secondary);
+}
